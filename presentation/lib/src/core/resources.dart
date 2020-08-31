@@ -20,4 +20,5 @@ class AppIcons {
   static const OVERFLOW_MENU = MdiIcons.dotsVertical;
   static const SETTINGS_DARK_MODE = MdiIcons.weatherNight;
   static const SETTINGS_LANGUAGE = MdiIcons.translate;
+  static const LOCATE_ME = MdiIcons.crosshairsGps;
 }

@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:presentation/src/core/resources.dart';
 
 class MapContainer extends StatefulWidget {
   @override
@@ -21,27 +22,26 @@ class _MapContainerState extends State<MapContainer> {
   @override
   void initState() {
     super.initState();
-    moveToCurrentPosition();
-  }
-
-  void moveToCurrentPosition() async {
-    final Position position =
-        await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    (await _mapController.future).animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          target: LatLng(position.latitude, position.longitude),
-          zoom: 15,
-        ),
-      ),
-    );
+    _moveToCurrentPosition();
   }
 
   @override
   Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        _map(context),
+        Align(
+          alignment: Alignment.topRight,
+          child: _locateMe(context),
+        ),
+      ],
+    );
+  }
+
+  Widget _map(BuildContext context) {
     return GoogleMap(
       mapType: MapType.normal,
-      myLocationButtonEnabled: true,
+      myLocationButtonEnabled: false,
       myLocationEnabled: true,
       initialCameraPosition: _position,
       onMapCreated: (GoogleMapController controller) {
@@ -57,6 +57,29 @@ class _MapContainerState extends State<MapContainer> {
       onCameraIdle: () async {
         log("onCameraIdle");
       },
+    );
+  }
+
+  Widget _locateMe(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(Dimens.UNIT_4),
+      child: FloatingActionButton(
+        child: Icon(AppIcons.LOCATE_ME),
+        onPressed: _moveToCurrentPosition,
+      ),
+    );
+  }
+
+  void _moveToCurrentPosition() async {
+    final Position position =
+        await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    (await _mapController.future).animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: LatLng(position.latitude, position.longitude),
+          zoom: 15,
+        ),
+      ),
     );
   }
 }
