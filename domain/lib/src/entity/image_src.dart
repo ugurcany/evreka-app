@@ -1,0 +1,1 @@
+enum ImageSrc { CAMERA, GALLERY }

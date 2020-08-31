@@ -1,0 +1,23 @@
+{
+  "common": {
+    "error": "Bir şeyler ters gitti!",
+    "cancel": "İptal",
+    "go_back": "Geri dön",
+    "menu": "Menü"
+  },
+  "splash": {
+    "login_with_google": "Google ile giriş yap",
+    "login_failed": "Giriş başarısız!"
+  },
+  "main": {
+    "logout": "Çıkış yap",
+    "logout_message": "Çıkış yapmak istediğine emin misin?",
+    "settings": "Ayarlar"
+  },
+  "settings": {
+    "title": "Ayarlar",
+    "app_settings": "Uygulama ayarları",
+    "dark_mode": "Karanlık mod",
+    "language": "Dil"
+  }
+}

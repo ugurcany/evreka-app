@@ -1,0 +1,48 @@
+build:
+  (execution): once
+  (scripts):
+    - flutter pub get
+    - cd data
+    - flutter pub get
+    - cd ../domain
+    - flutter pub get
+    - flutter pub run build_runner build --delete-conflicting-outputs
+    - cd ../presentation
+    - flutter pub get
+    - flutter pub run build_runner build --delete-conflicting-outputs
+    - flutter pub run easy_localization:generate -f keys -O lib/src/core -o localization.g.dart -S ../assets/strings
+
+pubget:
+  (execution): once
+  (scripts):
+    - flutter pub get
+    - cd data
+    - flutter pub get
+    - cd ../domain
+    - flutter pub get
+    - cd ../presentation
+    - flutter pub get
+
+pubgrade:
+  (execution): once
+  (scripts):
+    - flutter pub upgrade
+    - cd data
+    - flutter pub upgrade
+    - cd ../domain
+    - flutter pub upgrade
+    - cd ../presentation
+    - flutter pub upgrade
+
+icons:
+  (execution): once
+  (scripts):
+    - flutter pub get
+    - flutter pub run flutter_launcher_icons:main
+
+localization:
+  (execution): once
+  (scripts):
+    - cd presentation
+    - flutter pub get
+    - flutter pub run easy_localization:generate -f keys -O lib/src/core -o localization.g.dart -S ../assets/strings

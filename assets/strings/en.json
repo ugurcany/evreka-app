@@ -1,0 +1,23 @@
+{
+  "common": {
+    "error": "Something went wrong!",
+    "cancel": "Cancel",
+    "go_back": "Go back",
+    "menu": "Menu"
+  },
+  "splash": {
+    "login_with_google": "Log in with Google",
+    "login_failed": "Login failed!"
+  },
+  "main": {
+    "logout": "Log out",
+    "logout_message": "Are you sure you want to log out?",
+    "settings": "Settings"
+  },
+  "settings": {
+    "title": "Settings",
+    "app_settings": "App settings",
+    "dark_mode": "Dark mode",
+    "language": "Language"
+  }
+}
