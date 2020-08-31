@@ -5,6 +5,7 @@ import 'package:presentation/src/core/resources.dart';
 import 'package:presentation/src/feature/main/main_controller.dart';
 import 'package:presentation/src/feature/main/widget/drawer_item.dart';
 import 'package:presentation/src/feature/main/widget/main_drawer.dart';
+import 'package:presentation/src/feature/main/widget/map_container.dart';
 import 'package:presentation/src/feature/main/widget/user_drawer_header.dart';
 import 'package:presentation/src/feature/ui_state.dart';
 import 'package:presentation/src/widget/app_scaffold.dart';
@@ -30,13 +31,9 @@ class _MainPageState extends UiState<MainPage, MainController> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      body: _content(context),
+      body: MapContainer(),
       drawer: _drawer(),
     );
-  }
-
-  Widget _content(BuildContext context) {
-    return Container();
   }
 
   Widget _drawer() {

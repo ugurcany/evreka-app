@@ -23,11 +23,13 @@ dependencies:
   flutter_spinkit: ^4.1.2+1
   theme_mode_handler: ^2.0.0
   flutter_svg: ^0.18.0
+  google_maps_flutter: ^0.5.30
   # UTILS
   fluro: ^1.6.3
   easy_localization: ^2.3.3
   google_fonts: ^1.1.0
   shared_preferences: ^0.5.8
+  geolocator: ^6.0.0
 
 dev_dependencies:
   flutter_test:

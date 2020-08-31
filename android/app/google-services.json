@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "238332657426-p523uo2ghaml9o0jttdtof6lnb3jthpl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.evreka.app",
+            "certificate_hash": "c101924a860ed0f69564024b9a78d372af88eba1"
+          }
+        },
+        {
           "client_id": "238332657426-vva5vfl83f02df3hc8vkrtk67pg8rdek.apps.googleusercontent.com",
           "client_type": 3
         }
