@@ -13,7 +13,14 @@ abstract class  LocaleKeys {
   static const main_logout_message = 'main.logout_message';
   static const main_settings = 'main.settings';
   static const main_create_containers = 'main.create_containers';
+  static const main_create_containers_subtitle = 'main.create_containers_subtitle';
   static const main_no_last_known_location = 'main.no_last_known_location';
+  static const main_container_id = 'main.container.id';
+  static const main_container_next_collection = 'main.container.next_collection';
+  static const main_container_fullness_rate = 'main.container.fullness_rate';
+  static const main_container_navigate = 'main.container.navigate';
+  static const main_container_relocate = 'main.container.relocate';
+  static const main_container = 'main.container';
   static const main = 'main';
   static const settings_title = 'settings.title';
   static const settings_app_settings = 'settings.app_settings';

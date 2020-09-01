@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:presentation/src/core/localization.dart';
 import 'package:presentation/src/core/localization.g.dart';
 import 'package:presentation/src/core/resources.dart';
@@ -21,7 +20,6 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends UiState<MainPage, MainController> {
   final _controller = MainController();
-  BitmapDescriptor _batteryContainerPin;
 
   @override
   MainController get controller => _controller;
@@ -29,24 +27,14 @@ class _MainPageState extends UiState<MainPage, MainController> {
   @override
   void initState() {
     super.initState();
-    _loadMarkerPins();
     controller.getUser();
-  }
-
-  _loadMarkerPins() {
-    BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(devicePixelRatio: 2.5),
-      "assets/icons/ic_battery_container.png",
-    ).then((pin) {
-      _batteryContainerPin = pin;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
       body: MapView(
-        markers: _containersToMarkers(),
+        containers: controller.data.containers,
         onCameraIdle: (lat, lng) => controller.getContainers(lat, lng),
       ),
       drawer: _drawer(),
@@ -61,6 +49,7 @@ class _MainPageState extends UiState<MainPage, MainController> {
         DrawerItem(
           icon: AppIcons.CREATE,
           title: LocaleKeys.main_create_containers.localized(),
+          subtitle: LocaleKeys.main_create_containers_subtitle.localized(),
           onTap: _createContainers,
         ),
         Expanded(child: const SizedBox()),
@@ -92,16 +81,5 @@ class _MainPageState extends UiState<MainPage, MainController> {
       controller.createContainers(position.latitude, position.longitude);
     else
       Toaster.show(context, LocaleKeys.main_no_last_known_location.localized());
-  }
-
-  Set<Marker> _containersToMarkers() {
-    return controller.data.containers
-            ?.map((container) => Marker(
-                  markerId: MarkerId(container.id),
-                  position: LatLng(container.latLng.lat, container.latLng.lng),
-                  icon: _batteryContainerPin,
-                ))
-            ?.toSet() ??
-        null;
   }
 }

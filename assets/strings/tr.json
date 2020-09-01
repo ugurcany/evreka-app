@@ -14,7 +14,15 @@
     "logout_message": "Çıkış yapmak istediğine emin misin?",
     "settings": "Ayarlar",
     "create_containers": "Konteynerleri yarat",
-    "no_last_known_location": "Son bilinen konum yok!"
+    "create_containers_subtitle": "bilinen son konumun etrafında",
+    "no_last_known_location": "Son bilinen konum yok!",
+    "container": {
+      "id": "Konteyner {}",
+      "next_collection": "Sonraki Toplama",
+      "fullness_rate": "Doluluk Oranı",
+      "navigate": "Git",
+      "relocate": "Konumlandır"
+    }
   },
   "settings": {
     "title": "Ayarlar",

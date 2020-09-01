@@ -12,12 +12,14 @@ extension EvContainerCopyWithExtension on EvContainer {
     String id,
     LatLng latLng,
     DateTime nextCollection,
+    EvContainerType type,
   }) {
     return EvContainer(
       fullness: fullness ?? this.fullness,
       id: id ?? this.id,
       latLng: latLng ?? this.latLng,
       nextCollection: nextCollection ?? this.nextCollection,
+      type: type ?? this.type,
     );
   }
 }
@@ -36,6 +38,7 @@ EvContainer _$EvContainerFromJson(Map<String, dynamic> json) {
     nextCollection: json['nextCollection'] == null
         ? null
         : DateTime.parse(json['nextCollection'] as String),
+    type: _$enumDecodeNullable(_$EvContainerTypeEnumMap, json['type']),
   );
 }
 
@@ -52,5 +55,43 @@ Map<String, dynamic> _$EvContainerToJson(EvContainer instance) {
   writeNotNull('latLng', instance.latLng?.toJson());
   writeNotNull('fullness', instance.fullness);
   writeNotNull('nextCollection', instance.nextCollection?.toIso8601String());
+  writeNotNull('type', _$EvContainerTypeEnumMap[instance.type]);
   return val;
 }
+
+T _$enumDecode<T>(
+  Map<T, dynamic> enumValues,
+  dynamic source, {
+  T unknownValue,
+}) {
+  if (source == null) {
+    throw ArgumentError('A value must be provided. Supported values: '
+        '${enumValues.values.join(', ')}');
+  }
+
+  final value = enumValues.entries
+      .singleWhere((e) => e.value == source, orElse: () => null)
+      ?.key;
+
+  if (value == null && unknownValue == null) {
+    throw ArgumentError('`$source` is not one of the supported values: '
+        '${enumValues.values.join(', ')}');
+  }
+  return value ?? unknownValue;
+}
+
+T _$enumDecodeNullable<T>(
+  Map<T, dynamic> enumValues,
+  dynamic source, {
+  T unknownValue,
+}) {
+  if (source == null) {
+    return null;
+  }
+  return _$enumDecode<T>(enumValues, source, unknownValue: unknownValue);
+}
+
+const _$EvContainerTypeEnumMap = {
+  EvContainerType.BATTERY: 'BATTERY',
+  EvContainerType.HOUSEHOLD: 'HOUSEHOLD',
+};

@@ -12,12 +12,14 @@ class EvContainer extends Equatable {
   final LatLng latLng;
   final double fullness;
   final DateTime nextCollection;
+  final EvContainerType type;
 
   EvContainer({
     this.id,
     this.latLng,
     this.fullness,
     this.nextCollection,
+    this.type,
   });
 
   @override
@@ -26,6 +28,7 @@ class EvContainer extends Equatable {
         latLng,
         fullness,
         nextCollection,
+        type,
       ];
 
   @override
@@ -36,3 +39,5 @@ class EvContainer extends Equatable {
 
   Map<String, dynamic> toJson() => _$EvContainerToJson(this);
 }
+
+enum EvContainerType { BATTERY, HOUSEHOLD }

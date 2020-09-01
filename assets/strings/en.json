@@ -14,7 +14,15 @@
     "logout_message": "Are you sure you want to log out?",
     "settings": "Settings",
     "create_containers": "Create containers",
-    "no_last_known_location": "No last known location!"
+    "create_containers_subtitle": "around your last known location",
+    "no_last_known_location": "No last known location!",
+    "container": {
+      "id": "Container {}",
+      "next_collection": "Next Collection",
+      "fullness_rate": "Fullness Rate",
+      "navigate": "Navigate",
+      "relocate": "Relocate"
+    }
   },
   "settings": {
     "title": "Settings",

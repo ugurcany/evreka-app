@@ -19,6 +19,7 @@ class PrimaryButton extends StatelessWidget {
       padding: _padding(),
       shape: _border(context),
       color: Theme.of(context).accentColor,
+      elevation: Dimens.UNIT_4,
       onPressed: onPressed,
     );
   }
@@ -32,14 +33,14 @@ class PrimaryButton extends StatelessWidget {
 
   EdgeInsets _padding() {
     return EdgeInsets.symmetric(
-      horizontal: Dimens.UNIT_8,
+      horizontal: Dimens.UNIT_5,
       vertical: Dimens.UNIT_2,
     );
   }
 
   ShapeBorder _border(BuildContext context) {
     return RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(Dimens.UNIT),
+      borderRadius: BorderRadius.circular(Dimens.UNIT_2),
     );
   }
 

@@ -4,4 +4,6 @@ abstract class ContainerRepository {
   Future<List<EvContainer>> createDummyContainers(LatLng latLng);
 
   Stream<List<EvContainer>> getContainers(LatLng latLng);
+
+  Future deleteAllContainers();
 }

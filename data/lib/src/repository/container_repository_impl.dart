@@ -7,24 +7,29 @@ import 'package:geoflutterfire/geoflutterfire.dart';
 class ContainerRepositoryImpl implements ContainerRepository {
   final _geo = Geoflutterfire();
   final _firestore = Firestore.instance;
+  final _random = Random();
 
   @override
   Future<List<EvContainer>> createDummyContainers(LatLng latLng) async {
     final futures = List<Future>();
     final containers = List<EvContainer>();
 
-    await _deleteAllContainers();
-    for (var i = 1; i <= 10; i++) {
+    //DELETE ALL CONTAINERS FIRST
+    await deleteAllContainers();
+
+    //CREATE AND ADD DUMMY CONTAINERS TO FIRESTOREE
+    for (var i = 1; i <= 20; i++) {
       GeoFirePoint location = _geo.point(
-        latitude: latLng.lat + _generateRandomLocationOffset(),
-        longitude: latLng.lng + _generateRandomLocationOffset(),
+        latitude: _generateDouble(latLng.lat - 0.1, latLng.lat + 0.1),
+        longitude: _generateDouble(latLng.lng - 0.1, latLng.lng + 0.1),
       );
 
       final container = EvContainer(
         id: "#$i",
-        fullness: 0.50,
+        fullness: _generateDouble(0, 0.99),
         nextCollection: DateTime.now(),
         latLng: LatLng(location.latitude, location.longitude),
+        type: i % 2 == 0 ? EvContainerType.HOUSEHOLD : EvContainerType.BATTERY,
       );
       containers.add(container);
 
@@ -40,11 +45,8 @@ class ContainerRepositoryImpl implements ContainerRepository {
     return containers;
   }
 
-  double _generateRandomLocationOffset() {
-    return (Random().nextDouble() * 0.01) * (Random().nextBool() ? 1 : -1);
-  }
-
-  Future _deleteAllContainers() async {
+  @override
+  Future deleteAllContainers() async {
     final futures = List<Future>();
 
     await _firestore.collection("containers").getDocuments().then((snapshot) {
@@ -63,7 +65,7 @@ class ContainerRepositoryImpl implements ContainerRepository {
       latitude: latLng.lat,
       longitude: latLng.lng,
     );
-    double radius = 10;
+    double radius = 50;
     String field = "location";
 
     Stream<List<DocumentSnapshot>> stream = _geo
@@ -77,4 +79,7 @@ class ContainerRepositoryImpl implements ContainerRepository {
     yield* stream.map<List<EvContainer>>((snapshots) =>
         snapshots.map((ds) => EvContainer.fromJson(ds.data)).toList());
   }
+
+  double _generateDouble(double min, double max) =>
+      min + _random.nextDouble() * (max - min);
 }
