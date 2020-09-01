@@ -6,15 +6,23 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:presentation/src/core/resources.dart';
 
-class MapContainer extends StatefulWidget {
+class MapView extends StatefulWidget {
+  final Set<Marker> markers;
+  final Function(double, double) onCameraIdle;
+
+  MapView({
+    this.markers,
+    this.onCameraIdle,
+  });
+
   @override
-  _MapContainerState createState() => _MapContainerState();
+  _MapViewState createState() => _MapViewState();
 }
 
-class _MapContainerState extends State<MapContainer> {
+class _MapViewState extends State<MapView> {
   final _mapController = Completer<GoogleMapController>();
 
-  var _position = CameraPosition(
+  var _centerPosition = CameraPosition(
     target: LatLng(0, 0),
     zoom: 15,
   );
@@ -43,7 +51,8 @@ class _MapContainerState extends State<MapContainer> {
       mapType: MapType.normal,
       myLocationButtonEnabled: false,
       myLocationEnabled: true,
-      initialCameraPosition: _position,
+      initialCameraPosition: _centerPosition,
+      markers: widget.markers,
       onMapCreated: (GoogleMapController controller) {
         _mapController.complete(controller);
       },
@@ -52,10 +61,14 @@ class _MapContainerState extends State<MapContainer> {
             position.target.latitude.toString() +
             ", " +
             position.target.longitude.toString());
-        setState(() => _position = position);
+        setState(() => _centerPosition = position);
       },
       onCameraIdle: () async {
         log("onCameraIdle");
+        widget.onCameraIdle?.call(
+          _centerPosition.target.latitude,
+          _centerPosition.target.longitude,
+        );
       },
     );
   }
@@ -70,7 +83,7 @@ class _MapContainerState extends State<MapContainer> {
     );
   }
 
-  void _moveToCurrentPosition() async {
+  _moveToCurrentPosition() async {
     final Position position =
         await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     (await _mapController.future).animateCamera(

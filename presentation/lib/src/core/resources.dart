@@ -21,4 +21,5 @@ class AppIcons {
   static const SETTINGS_DARK_MODE = MdiIcons.weatherNight;
   static const SETTINGS_LANGUAGE = MdiIcons.translate;
   static const LOCATE_ME = MdiIcons.crosshairsGps;
+  static const CREATE = MdiIcons.databasePlus;
 }

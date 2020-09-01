@@ -12,6 +12,8 @@ abstract class  LocaleKeys {
   static const main_logout = 'main.logout';
   static const main_logout_message = 'main.logout_message';
   static const main_settings = 'main.settings';
+  static const main_create_containers = 'main.create_containers';
+  static const main_no_last_known_location = 'main.no_last_known_location';
   static const main = 'main';
   static const settings_title = 'settings.title';
   static const settings_app_settings = 'settings.app_settings';

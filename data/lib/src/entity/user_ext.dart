@@ -8,7 +8,6 @@ extension UserExt on User {
       email: userDelta.email ?? this.email,
       avatarUrl: userDelta.avatarUrl ?? this.avatarUrl,
       authProvider: userDelta.authProvider ?? this.authProvider,
-      location: userDelta.location ?? this.location,
     );
   }
 }

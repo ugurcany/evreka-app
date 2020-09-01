@@ -22,6 +22,11 @@ abstract class Presenter {
       onError: (id, error) => _onError(id, error, callback),
       onComplete: (id) => _onComplete(id, callback),
     );
+
+    //ALREADY HAVE THE SAME SUBSRCIPTION --> CANCEL IT FIRST
+    if (_streamSubscriptions.containsKey(entry.key))
+      _streamSubscriptions[entry.key].cancel();
+
     _streamSubscriptions[entry.key] = entry.value;
   }
 
@@ -29,14 +34,14 @@ abstract class Presenter {
     callback?.call(requestResult);
   }
 
-  _onError(String id, dynamic error, Function(RequestResult) callback) {
+  _onError(String key, dynamic error, Function(RequestResult) callback) {
     log(error.toString());
-    _streamSubscriptions.remove(id);
+    _streamSubscriptions.remove(key);
     callback?.call(RequestResult.error(error));
   }
 
-  _onComplete(String id, Function(RequestResult) callback) {
-    _streamSubscriptions.remove(id);
+  _onComplete(String key, Function(RequestResult) callback) {
+    _streamSubscriptions.remove(key);
     callback?.call(RequestResult.complete());
   }
 }

@@ -12,7 +12,9 @@
   "main": {
     "logout": "Çıkış yap",
     "logout_message": "Çıkış yapmak istediğine emin misin?",
-    "settings": "Ayarlar"
+    "settings": "Ayarlar",
+    "create_containers": "Konteynerleri yarat",
+    "no_last_known_location": "Son bilinen konum yok!"
   },
   "settings": {
     "title": "Ayarlar",

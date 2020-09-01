@@ -23,9 +23,20 @@ class MainController extends Controller<ViewData, MainPresenter> {
         data.user = user;
       }),
     );
+    observe(
+      (_) => presenter.containersResult,
+      onSuccess: (containers) => setState(() {
+        data.containers = containers;
+      }),
+    );
   }
 
   getUser() => presenter.getUser();
+
+  getContainers(double lat, double lng) => presenter.getContainers(lat, lng);
+
+  createContainers(double lat, double lng) =>
+      presenter.createContainers(lat, lng);
 
   onLogoutClicked() {
     presenter.logOut();
@@ -40,4 +51,5 @@ class MainController extends Controller<ViewData, MainPresenter> {
 
 class MainViewData extends ViewData {
   User user;
+  List<EvContainer> containers;
 }

@@ -40,4 +40,7 @@ class SetAvatarUsecase extends Usecase {
       }
     }
   }
+
+  @override
+  String get key => "SET_AVATAR";
 }

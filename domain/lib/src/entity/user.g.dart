@@ -12,7 +12,6 @@ extension UserCopyWithExtension on User {
     String avatarUrl,
     String email,
     String id,
-    String location,
     String name,
   }) {
     return User(
@@ -20,7 +19,6 @@ extension UserCopyWithExtension on User {
       avatarUrl: avatarUrl ?? this.avatarUrl,
       email: email ?? this.email,
       id: id ?? this.id,
-      location: location ?? this.location,
       name: name ?? this.name,
     );
   }
@@ -37,7 +35,6 @@ User _$UserFromJson(Map<String, dynamic> json) {
     email: json['email'] as String,
     avatarUrl: json['avatarUrl'] as String,
     authProvider: json['authProvider'] as String,
-    location: json['location'] as String,
   );
 }
 
@@ -55,6 +52,5 @@ Map<String, dynamic> _$UserToJson(User instance) {
   writeNotNull('email', instance.email);
   writeNotNull('avatarUrl', instance.avatarUrl);
   writeNotNull('authProvider', instance.authProvider);
-  writeNotNull('location', instance.location);
   return val;
 }

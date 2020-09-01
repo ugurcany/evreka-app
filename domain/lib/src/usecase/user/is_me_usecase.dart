@@ -11,4 +11,7 @@ class IsMeUsecase extends Usecase {
 
     yield RequestResult.success(isMe);
   }
+
+  @override
+  String get key => "IS_ME";
 }

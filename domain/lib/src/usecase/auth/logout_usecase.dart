@@ -17,4 +17,7 @@ class LogoutUsecase extends Usecase {
 
     yield RequestResult.success(false);
   }
+
+  @override
+  String get key => "LOGOUT";
 }

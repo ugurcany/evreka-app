@@ -12,7 +12,6 @@ class User extends Equatable {
   final String email;
   final String avatarUrl;
   final String authProvider;
-  final String location;
 
   User({
     this.id,
@@ -20,7 +19,6 @@ class User extends Equatable {
     this.email,
     this.avatarUrl,
     this.authProvider,
-    this.location,
   });
 
   @override
@@ -30,7 +28,6 @@ class User extends Equatable {
         email,
         avatarUrl,
         authProvider,
-        location,
       ];
 
   @override

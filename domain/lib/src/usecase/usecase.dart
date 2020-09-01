@@ -1,11 +1,7 @@
 import 'dart:async';
 
-import 'package:uuid/uuid.dart';
-
 abstract class Usecase {
-  final _uuid = Uuid();
-
-  String _id;
+  String get key;
 
   Stream invoke([dynamic params]);
 
@@ -17,13 +13,12 @@ abstract class Usecase {
     Function onError,
     Function onComplete,
   }) {
-    _id = _uuid.v1();
     return MapEntry(
-      _id,
+      key,
       invoke(params).listen(
         (requestResult) => onData?.call(requestResult),
-        onError: (error) => onError?.call(_id, error),
-        onDone: () => onComplete?.call(_id),
+        onError: (error) => onError?.call(key, error),
+        onDone: () => onComplete?.call(key),
         cancelOnError: true,
       ),
     );

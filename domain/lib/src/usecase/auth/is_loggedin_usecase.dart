@@ -14,4 +14,7 @@ class IsLoggedInUsecase extends Usecase {
 
     yield RequestResult.success(isLoggedIn);
   }
+
+  @override
+  String get key => "IS_LOGGED_IN";
 }

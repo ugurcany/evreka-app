@@ -21,6 +21,7 @@ dependencies:
   shared_preferences: ^0.5.8
   path: ^1.6.4
   image_picker: ^0.6.7
+  geoflutterfire: ^2.1.0
 
 dev_dependencies:
   flutter_test:

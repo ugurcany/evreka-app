@@ -9,12 +9,17 @@ class MainPresenter = MainPresenterBase with _$MainPresenter;
 abstract class MainPresenterBase extends Presenter with Store {
   final _getUser = GetUserUsecase();
   final _logout = LogoutUsecase();
+  final _createContainers = CreateContainersUsecase();
+  final _getContainers = GetContainersUsecase();
 
   @observable
   RequestResult userResult = RequestResult.idle();
 
   @observable
   RequestResult logoutResult = RequestResult.idle();
+
+  @observable
+  RequestResult containersResult = RequestResult.idle();
 
   @action
   getUser() {
@@ -29,6 +34,24 @@ abstract class MainPresenterBase extends Presenter with Store {
     subscribe(
       _logout,
       callback: (result) => logoutResult = result,
+    );
+  }
+
+  @action
+  createContainers(double lat, double lng) {
+    subscribe(
+      _createContainers,
+      params: LatLng(lat, lng),
+      callback: (result) => containersResult = result,
+    );
+  }
+
+  @action
+  getContainers(double lat, double lng) {
+    subscribe(
+      _getContainers,
+      params: LatLng(lat, lng),
+      callback: (result) => containersResult = result,
     );
   }
 }

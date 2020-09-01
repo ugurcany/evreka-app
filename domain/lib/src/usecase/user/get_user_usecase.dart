@@ -13,4 +13,7 @@ class GetUserUsecase extends Usecase {
 
     yield RequestResult.success(userFromRemote);
   }
+
+  @override
+  String get key => "GET_USER";
 }

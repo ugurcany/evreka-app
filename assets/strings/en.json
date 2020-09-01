@@ -12,7 +12,9 @@
   "main": {
     "logout": "Log out",
     "logout_message": "Are you sure you want to log out?",
-    "settings": "Settings"
+    "settings": "Settings",
+    "create_containers": "Create containers",
+    "no_last_known_location": "No last known location!"
   },
   "settings": {
     "title": "Settings",

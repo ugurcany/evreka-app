@@ -17,4 +17,7 @@ class LoginWithGoogleUsecase extends Usecase {
 
     yield RequestResult.success(true);
   }
+
+  @override
+  String get key => "LOGIN_GOOGLE";
 }

@@ -24,4 +24,7 @@ class LoginWithTwitterUsecase extends Usecase {
 
     yield RequestResult.success(true);
   }
+
+  @override
+  String get key => "LOGIN_TWITTER";
 }

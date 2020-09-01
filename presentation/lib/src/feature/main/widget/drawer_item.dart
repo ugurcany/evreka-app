@@ -8,7 +8,7 @@ class DrawerItem extends StatelessWidget {
   DrawerItem({
     @required this.icon,
     @required this.title,
-    @required this.onTap,
+    this.onTap,
   });
 
   @override

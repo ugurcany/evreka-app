@@ -39,6 +39,22 @@ mixin _$MainPresenter on MainPresenterBase, Store {
     });
   }
 
+  final _$containersResultAtom =
+      Atom(name: 'MainPresenterBase.containersResult');
+
+  @override
+  RequestResult get containersResult {
+    _$containersResultAtom.reportRead();
+    return super.containersResult;
+  }
+
+  @override
+  set containersResult(RequestResult value) {
+    _$containersResultAtom.reportWrite(value, super.containersResult, () {
+      super.containersResult = value;
+    });
+  }
+
   final _$MainPresenterBaseActionController =
       ActionController(name: 'MainPresenterBase');
 
@@ -65,10 +81,33 @@ mixin _$MainPresenter on MainPresenterBase, Store {
   }
 
   @override
+  dynamic createContainers(double lat, double lng) {
+    final _$actionInfo = _$MainPresenterBaseActionController.startAction(
+        name: 'MainPresenterBase.createContainers');
+    try {
+      return super.createContainers(lat, lng);
+    } finally {
+      _$MainPresenterBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic getContainers(double lat, double lng) {
+    final _$actionInfo = _$MainPresenterBaseActionController.startAction(
+        name: 'MainPresenterBase.getContainers');
+    try {
+      return super.getContainers(lat, lng);
+    } finally {
+      _$MainPresenterBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 userResult: ${userResult},
-logoutResult: ${logoutResult}
+logoutResult: ${logoutResult},
+containersResult: ${containersResult}
     ''';
   }
 }

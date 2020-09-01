@@ -13,4 +13,7 @@ class UpdateUserUsecase extends Usecase {
 
     yield RequestResult.success(user);
   }
+
+  @override
+  String get key => "UPDATE_USER";
 }
