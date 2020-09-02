@@ -1,8 +1,11 @@
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:presentation/src/core/localization.dart';
+import 'package:presentation/src/core/localization.g.dart';
 import 'package:presentation/src/core/navigation.dart';
 import 'package:presentation/src/feature/controller.dart';
 import 'package:presentation/src/feature/main/main_presenter.dart';
+import 'package:presentation/src/widget/toaster.dart';
 
 class MainController extends Controller<ViewData, MainPresenter> {
   final _presenter = MainPresenter();
@@ -25,7 +28,17 @@ class MainController extends Controller<ViewData, MainPresenter> {
     );
     observe(
       (_) => presenter.containersResult,
+      onLoading: () => setState(() {
+        data.isLoading = true;
+      }),
+      onError: (error) {
+        setState(() {
+          data.isLoading = false;
+        });
+        Toaster.show(context, LocaleKeys.common_error.localized());
+      },
       onSuccess: (containers) => setState(() {
+        data.isLoading = false;
         data.containers = containers;
       }),
     );
@@ -35,8 +48,13 @@ class MainController extends Controller<ViewData, MainPresenter> {
 
   getContainers(double lat, double lng) => presenter.getContainers(lat, lng);
 
-  createContainers(double lat, double lng) =>
-      presenter.createContainers(lat, lng);
+  createContainers(double lat, double lng) {
+    Navigation.pop(context);
+    presenter.createContainers(lat, lng);
+  }
+
+  relocateContainer(EvContainer container, double lat, double lng) =>
+      presenter.relocateContainer(container, lat, lng);
 
   onLogoutClicked() {
     presenter.logOut();
@@ -52,4 +70,5 @@ class MainController extends Controller<ViewData, MainPresenter> {
 class MainViewData extends ViewData {
   User user;
   List<EvContainer> containers;
+  bool isLoading = false;
 }

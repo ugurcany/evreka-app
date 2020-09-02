@@ -5,5 +5,8 @@ abstract class ContainerRepository {
 
   Stream<List<EvContainer>> getContainers(LatLng latLng);
 
+  Future<List<EvContainer>> relocateContainer(
+      EvContainer container, LatLng newLatLng);
+
   Future deleteAllContainers();
 }

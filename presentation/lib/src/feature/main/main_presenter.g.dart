@@ -103,6 +103,17 @@ mixin _$MainPresenter on MainPresenterBase, Store {
   }
 
   @override
+  dynamic relocateContainer(EvContainer container, double lat, double lng) {
+    final _$actionInfo = _$MainPresenterBaseActionController.startAction(
+        name: 'MainPresenterBase.relocateContainer');
+    try {
+      return super.relocateContainer(container, lat, lng);
+    } finally {
+      _$MainPresenterBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 userResult: ${userResult},

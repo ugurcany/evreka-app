@@ -10,3 +10,4 @@ export 'user/update_user_usecase.dart';
 export 'user/is_me_usecase.dart';
 export 'container/create_containers.dart';
 export 'container/get_containers.dart';
+export 'container/relocate_container.dart';

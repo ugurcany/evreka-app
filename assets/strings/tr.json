@@ -1,6 +1,7 @@
 {
   "common": {
     "error": "Bir şeyler ters gitti!",
+    "not_implemented": "Henüz hazır değil!",
     "cancel": "İptal",
     "go_back": "Geri dön",
     "menu": "Menü"
@@ -21,7 +22,10 @@
       "next_collection": "Sonraki Toplama",
       "fullness_rate": "Doluluk Oranı",
       "navigate": "Git",
-      "relocate": "Konumlandır"
+      "relocate": "Konumlandır",
+      "relocate_description": "Konteyneri yeniden konumlandırmak için harita üzerinde bir konum seçin. Haritada herhangi bir yere dokunarak seçebilirsiniz.",
+      "save": "Save",
+      "relocate_warning": "Önce bir konum seçin!"
     }
   },
   "settings": {

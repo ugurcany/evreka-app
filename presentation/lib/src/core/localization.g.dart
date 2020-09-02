@@ -2,6 +2,7 @@
 
 abstract class  LocaleKeys {
   static const common_error = 'common.error';
+  static const common_not_implemented = 'common.not_implemented';
   static const common_cancel = 'common.cancel';
   static const common_go_back = 'common.go_back';
   static const common_menu = 'common.menu';
@@ -20,6 +21,9 @@ abstract class  LocaleKeys {
   static const main_container_fullness_rate = 'main.container.fullness_rate';
   static const main_container_navigate = 'main.container.navigate';
   static const main_container_relocate = 'main.container.relocate';
+  static const main_container_relocate_description = 'main.container.relocate_description';
+  static const main_container_save = 'main.container.save';
+  static const main_container_relocate_warning = 'main.container.relocate_warning';
   static const main_container = 'main.container';
   static const main = 'main';
   static const settings_title = 'settings.title';

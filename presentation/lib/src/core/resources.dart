@@ -13,7 +13,11 @@ class Dimens {
 
 class AppIcons {
   static const BATTERY_PIN = "assets/icons/ic_battery_container.png";
+  static const BATTERY_RELOCATED_PIN =
+      "assets/icons/ic_battery_container_relocated.png";
   static const HOUSEHOLD_PIN = "assets/icons/ic_household_container.png";
+  static const HOUSEHOLD_RELOCATED_PIN =
+      "assets/icons/ic_household_container_relocated.png";
 
   static const GOOGLE = MdiIcons.google;
   static const SETTINGS = MdiIcons.cogOutline;

@@ -6,8 +6,6 @@ class GetContainersUsecase extends Usecase {
 
   @override
   Stream<RequestResult> invoke([dynamic params]) async* {
-    yield RequestResult.loading();
-
     LatLng latLng = params as LatLng;
     yield* _containerRepository
         .getContainers(latLng)

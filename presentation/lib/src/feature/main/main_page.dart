@@ -32,12 +32,19 @@ class _MainPageState extends UiState<MainPage, MainController> {
 
   @override
   Widget build(BuildContext context) {
-    return AppScaffold(
-      body: MapView(
-        containers: controller.data.containers,
-        onCameraIdle: (lat, lng) => controller.getContainers(lat, lng),
-      ),
-      drawer: _drawer(),
+    return Stack(
+      children: [
+        AppScaffold(
+          body: MapView(
+            containers: controller.data.containers,
+            onCameraIdle: (lat, lng) => controller.getContainers(lat, lng),
+            onRelocate: (container, lat, lng) =>
+                controller.relocateContainer(container, lat, lng),
+          ),
+          drawer: _drawer(),
+        ),
+        controller.data.isLoading ? loading(context) : const SizedBox(),
+      ],
     );
   }
 

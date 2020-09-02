@@ -1,6 +1,7 @@
 {
   "common": {
     "error": "Something went wrong!",
+    "not_implemented": "Not implemented yet!",
     "cancel": "Cancel",
     "go_back": "Go back",
     "menu": "Menu"
@@ -21,7 +22,10 @@
       "next_collection": "Next Collection",
       "fullness_rate": "Fullness Rate",
       "navigate": "Navigate",
-      "relocate": "Relocate"
+      "relocate": "Relocate",
+      "relocate_description": "Please select a location from the map for your bin to be relocated. You can select a location by tapping on the map.",
+      "save": "Save",
+      "relocate_warning": "Select a location first!"
     }
   },
   "settings": {

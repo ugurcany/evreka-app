@@ -34,7 +34,7 @@ class ContainerRepositoryImpl implements ContainerRepository {
       containers.add(container);
 
       futures.add(
-        _firestore.collection("containers").add(
+        _firestore.collection("containers").document(container.id).setData(
             container.toJson()..putIfAbsent("location", () => location.data)),
       );
     }
@@ -78,6 +78,27 @@ class ContainerRepositoryImpl implements ContainerRepository {
 
     yield* stream.map<List<EvContainer>>((snapshots) =>
         snapshots.map((ds) => EvContainer.fromJson(ds.data)).toList());
+  }
+
+  @override
+  Future<List<EvContainer>> relocateContainer(
+      EvContainer container, LatLng newLatLng) async {
+    GeoFirePoint newPoint = _geo.point(
+      latitude: newLatLng.lat,
+      longitude: newLatLng.lng,
+    );
+
+    await _firestore
+        .collection("containers")
+        .document(container.id)
+        .updateData({
+      "location": newPoint.data,
+      "latLng": newLatLng.toJson(),
+    });
+
+    final snapshot = await _firestore.collection("containers").getDocuments();
+
+    return snapshot.documents.map((d) => EvContainer.fromJson(d.data)).toList();
   }
 
   double _generateDouble(double min, double max) =>

@@ -11,6 +11,7 @@ abstract class MainPresenterBase extends Presenter with Store {
   final _logout = LogoutUsecase();
   final _createContainers = CreateContainersUsecase();
   final _getContainers = GetContainersUsecase();
+  final _relocateContainer = RelocateContainerUsecase();
 
   @observable
   RequestResult userResult = RequestResult.idle();
@@ -51,6 +52,18 @@ abstract class MainPresenterBase extends Presenter with Store {
     subscribe(
       _getContainers,
       params: LatLng(lat, lng),
+      callback: (result) => containersResult = result,
+    );
+  }
+
+  @action
+  relocateContainer(EvContainer container, double lat, double lng) {
+    subscribe(
+      _relocateContainer,
+      params: [
+        container,
+        LatLng(lat, lng),
+      ],
       callback: (result) => containersResult = result,
     );
   }
