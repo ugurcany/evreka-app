@@ -22,6 +22,9 @@ abstract class MainPresenterBase extends Presenter with Store {
   @observable
   RequestResult containersResult = RequestResult.idle();
 
+  @observable
+  RequestResult relocationResult = RequestResult.idle();
+
   @action
   getUser() {
     subscribe(
@@ -48,23 +51,26 @@ abstract class MainPresenterBase extends Presenter with Store {
   }
 
   @action
-  getContainers(double lat, double lng) {
+  getContainers(double lat, double lng, double radius) {
     subscribe(
       _getContainers,
-      params: LatLng(lat, lng),
+      params: [
+        LatLng(lat, lng),
+        radius,
+      ],
       callback: (result) => containersResult = result,
     );
   }
 
   @action
-  relocateContainer(EvContainer container, double lat, double lng) {
+  relocateContainer(String containerId, double lat, double lng) {
     subscribe(
       _relocateContainer,
       params: [
-        container,
+        containerId,
         LatLng(lat, lng),
       ],
-      callback: (result) => containersResult = result,
+      callback: (result) => relocationResult = result,
     );
   }
 }

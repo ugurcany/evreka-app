@@ -37,9 +37,10 @@ class _MainPageState extends UiState<MainPage, MainController> {
         AppScaffold(
           body: MapView(
             containers: controller.data.containers,
-            onCameraIdle: (lat, lng) => controller.getContainers(lat, lng),
-            onRelocate: (container, lat, lng) =>
-                controller.relocateContainer(container, lat, lng),
+            onCameraIdle: (lat, lng, radius) =>
+                controller.getContainers(lat, lng, radius),
+            onRelocate: (containerId, lat, lng) =>
+                controller.relocateContainer(containerId, lat, lng),
           ),
           drawer: _drawer(),
         ),

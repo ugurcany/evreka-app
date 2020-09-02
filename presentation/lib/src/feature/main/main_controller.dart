@@ -42,19 +42,35 @@ class MainController extends Controller<ViewData, MainPresenter> {
         data.containers = containers;
       }),
     );
+    observe(
+      (_) => presenter.relocationResult,
+      onLoading: () => setState(() {
+        data.isLoading = true;
+      }),
+      onError: (error) {
+        setState(() {
+          data.isLoading = false;
+        });
+        Toaster.show(context, LocaleKeys.common_error.localized());
+      },
+      onSuccess: (_) => setState(() {
+        data.isLoading = false;
+      }),
+    );
   }
 
   getUser() => presenter.getUser();
 
-  getContainers(double lat, double lng) => presenter.getContainers(lat, lng);
+  getContainers(double lat, double lng, double radius) =>
+      presenter.getContainers(lat, lng, radius);
 
   createContainers(double lat, double lng) {
     Navigation.pop(context);
     presenter.createContainers(lat, lng);
   }
 
-  relocateContainer(EvContainer container, double lat, double lng) =>
-      presenter.relocateContainer(container, lat, lng);
+  relocateContainer(String containerId, double lat, double lng) =>
+      presenter.relocateContainer(containerId, lat, lng);
 
   onLogoutClicked() {
     presenter.logOut();

@@ -8,14 +8,17 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:presentation/src/core/localization.dart';
 import 'package:presentation/src/core/localization.g.dart';
 import 'package:presentation/src/core/resources.dart';
-import 'package:presentation/src/entity/evcontainer_ext.dart';
-import 'package:presentation/src/widget/primary_button.dart';
+import 'package:presentation/src/feature/main/widget/container_info_card.dart';
+import 'package:presentation/src/feature/main/widget/relocation_card.dart';
 import 'package:presentation/src/widget/toaster.dart';
+
+const double MAX_ZOOM = 18;
+const double MIN_ZOOM = 10;
 
 class MapView extends StatefulWidget {
   final List<EvContainer> containers;
-  final Function(double, double) onCameraIdle;
-  final Function(EvContainer, double, double) onRelocate;
+  final Function(double, double, double) onCameraIdle;
+  final Function(String, double, double) onRelocate;
 
   MapView({
     this.containers,
@@ -35,9 +38,14 @@ class _MapViewState extends State<MapView> {
   BitmapDescriptor _householdContainerRelocatedPin;
 
   CameraPosition _centerPosition = CameraPosition(target: LatLng(0, 0));
-  EvContainer _selectedContainer;
+  String _selectedContainerId;
   LatLng _relocationPoint;
   bool _isRelocating = false;
+
+  EvContainer get _selectedContainer => widget.containers
+      ?.singleWhere((c) => c.id == _selectedContainerId, orElse: () => null);
+
+  double get _geoRadius => (MAX_ZOOM - _centerPosition.zoom + MIN_ZOOM);
 
   @override
   void initState() {
@@ -88,12 +96,18 @@ class _MapViewState extends State<MapView> {
           duration: kThemeAnimationDuration,
           alignment: Alignment(
               0, (_selectedContainer != null && !_isRelocating) ? 1 : 3),
-          child: _infoCard(context),
+          child: ContainerInfoCard(
+            container: _selectedContainer,
+            onRelocateClicked: () => _enableRelocation(),
+          ),
         ),
         AnimatedAlign(
           duration: kThemeAnimationDuration,
           alignment: Alignment(0, _isRelocating ? 1 : 3),
-          child: _relocationCard(context),
+          child: RelocationCard(
+            onCancel: () => _resetView(),
+            onSave: () => _saveRelocation(),
+          ),
         ),
       ],
     );
@@ -105,7 +119,9 @@ class _MapViewState extends State<MapView> {
       myLocationButtonEnabled: false,
       myLocationEnabled: true,
       initialCameraPosition: _centerPosition,
+      minMaxZoomPreference: MinMaxZoomPreference(MIN_ZOOM, MAX_ZOOM),
       markers: _containersToMarkers(),
+      circles: _generateCenterCircle(),
       onMapCreated: (GoogleMapController controller) {
         _mapController.complete(controller);
       },
@@ -129,6 +145,7 @@ class _MapViewState extends State<MapView> {
         widget.onCameraIdle?.call(
           _centerPosition.target.latitude,
           _centerPosition.target.longitude,
+          _geoRadius,
         );
       },
     );
@@ -144,186 +161,9 @@ class _MapViewState extends State<MapView> {
     );
   }
 
-  Widget _infoCard(BuildContext context) {
-    return Card(
-      elevation: Dimens.UNIT_4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Dimens.UNIT_2),
-      ),
-      margin: EdgeInsets.symmetric(
-        vertical: Dimens.UNIT_6,
-        horizontal: Dimens.UNIT_3,
-      ),
-      child: Container(
-        padding: EdgeInsets.all(Dimens.UNIT_5),
-        width: double.infinity,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              LocaleKeys.main_container_id
-                  .localized(args: [_selectedContainer?.id ?? "-"]),
-              style: Theme.of(context)
-                  .textTheme
-                  .headline6
-                  .copyWith(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: Dimens.UNIT_2),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    LocaleKeys.main_container_next_collection.localized(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle1
-                        .copyWith(fontWeight: FontWeight.w900),
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    LocaleKeys.main_container_type.localized(),
-                    textAlign: TextAlign.end,
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle1
-                        .copyWith(fontWeight: FontWeight.w900),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    _selectedContainer?.displayNextCollection ?? "-",
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    _selectedContainer?.displayType ?? "-",
-                    textAlign: TextAlign.end,
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: Dimens.UNIT_2),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    LocaleKeys.main_container_fullness_rate.localized(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle1
-                        .copyWith(fontWeight: FontWeight.w900),
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    LocaleKeys.main_container_temperature.localized(),
-                    textAlign: TextAlign.end,
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle1
-                        .copyWith(fontWeight: FontWeight.w900),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    _selectedContainer?.displayFullnessRate ?? "-",
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    _selectedContainer?.displayTemperature ?? "-",
-                    textAlign: TextAlign.end,
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: Dimens.UNIT_4),
-            Row(
-              children: [
-                Expanded(
-                  child: PrimaryButton(
-                    text: LocaleKeys.main_container_navigate.localized(),
-                    onPressed: () => Toaster.show(
-                        context, LocaleKeys.common_not_implemented.localized()),
-                  ),
-                ),
-                const SizedBox(width: Dimens.UNIT_5),
-                Expanded(
-                  child: PrimaryButton(
-                    text: LocaleKeys.main_container_relocate.localized(),
-                    onPressed: () => _enableRelocation(),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _relocationCard(BuildContext context) {
-    return Card(
-      elevation: Dimens.UNIT_4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Dimens.UNIT_2),
-      ),
-      margin: EdgeInsets.symmetric(
-        vertical: Dimens.UNIT_6,
-        horizontal: Dimens.UNIT_3,
-      ),
-      child: Container(
-        padding: EdgeInsets.all(Dimens.UNIT_5),
-        width: double.infinity,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              LocaleKeys.main_container_relocate_description.localized(),
-              style: Theme.of(context).textTheme.subtitle1,
-            ),
-            const SizedBox(height: Dimens.UNIT_4),
-            Row(
-              children: [
-                Expanded(
-                  child: PrimaryButton(
-                    text: LocaleKeys.common_cancel.localized(),
-                    onPressed: () => _resetView(),
-                  ),
-                ),
-                const SizedBox(width: Dimens.UNIT_5),
-                Expanded(
-                  child: PrimaryButton(
-                    text: LocaleKeys.main_container_save.localized(),
-                    onPressed: () => _saveRelocation(),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   _resetView() {
     setState(() {
-      _selectedContainer = null;
+      _selectedContainerId = null;
       _isRelocating = false;
       _relocationPoint = null;
     });
@@ -339,7 +179,7 @@ class _MapViewState extends State<MapView> {
           context, LocaleKeys.main_container_relocate_warning.localized());
     else {
       widget.onRelocate?.call(
-        _selectedContainer,
+        _selectedContainerId,
         _relocationPoint.latitude,
         _relocationPoint.longitude,
       );
@@ -347,11 +187,11 @@ class _MapViewState extends State<MapView> {
     }
   }
 
-  _showInfoCard(EvContainer selectedContainer) {
+  _showInfoCard(String selectedContainerId) {
     setState(() {
       _isRelocating = false;
       _relocationPoint = null;
-      _selectedContainer = selectedContainer;
+      _selectedContainerId = selectedContainerId;
     });
   }
 
@@ -393,12 +233,26 @@ class _MapViewState extends State<MapView> {
         null;
   }
 
+  Set<Circle> _generateCenterCircle() {
+    return Set.from([
+      Circle(
+        circleId: CircleId("center_circle"),
+        center: LatLng(
+          _centerPosition.target.latitude,
+          _centerPosition.target.longitude,
+        ),
+        radius: _geoRadius * 1000,
+        strokeColor: Theme.of(context).primaryColor.withOpacity(0.2),
+      )
+    ]);
+  }
+
   Marker _generateMarker(EvContainer container) {
     return Marker(
       markerId: MarkerId(container.id),
       position: LatLng(container.latLng.lat, container.latLng.lng),
       icon: _getMarkerPin(container.type),
-      onTap: () => _showInfoCard(container),
+      onTap: () => _showInfoCard(container.id),
     );
   }
 

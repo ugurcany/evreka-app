@@ -55,6 +55,22 @@ mixin _$MainPresenter on MainPresenterBase, Store {
     });
   }
 
+  final _$relocationResultAtom =
+      Atom(name: 'MainPresenterBase.relocationResult');
+
+  @override
+  RequestResult get relocationResult {
+    _$relocationResultAtom.reportRead();
+    return super.relocationResult;
+  }
+
+  @override
+  set relocationResult(RequestResult value) {
+    _$relocationResultAtom.reportWrite(value, super.relocationResult, () {
+      super.relocationResult = value;
+    });
+  }
+
   final _$MainPresenterBaseActionController =
       ActionController(name: 'MainPresenterBase');
 
@@ -92,22 +108,22 @@ mixin _$MainPresenter on MainPresenterBase, Store {
   }
 
   @override
-  dynamic getContainers(double lat, double lng) {
+  dynamic getContainers(double lat, double lng, double radius) {
     final _$actionInfo = _$MainPresenterBaseActionController.startAction(
         name: 'MainPresenterBase.getContainers');
     try {
-      return super.getContainers(lat, lng);
+      return super.getContainers(lat, lng, radius);
     } finally {
       _$MainPresenterBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  dynamic relocateContainer(EvContainer container, double lat, double lng) {
+  dynamic relocateContainer(String containerId, double lat, double lng) {
     final _$actionInfo = _$MainPresenterBaseActionController.startAction(
         name: 'MainPresenterBase.relocateContainer');
     try {
-      return super.relocateContainer(container, lat, lng);
+      return super.relocateContainer(containerId, lat, lng);
     } finally {
       _$MainPresenterBaseActionController.endAction(_$actionInfo);
     }
@@ -118,7 +134,8 @@ mixin _$MainPresenter on MainPresenterBase, Store {
     return '''
 userResult: ${userResult},
 logoutResult: ${logoutResult},
-containersResult: ${containersResult}
+containersResult: ${containersResult},
+relocationResult: ${relocationResult}
     ''';
   }
 }

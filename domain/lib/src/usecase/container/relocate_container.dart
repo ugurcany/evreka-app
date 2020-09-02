@@ -8,12 +8,11 @@ class RelocateContainerUsecase extends Usecase {
   Stream<RequestResult> invoke([dynamic params]) async* {
     yield RequestResult.loading();
 
-    EvContainer container = params[0] as EvContainer;
+    String containerId = params[0] as String;
     LatLng latLng = params[1] as LatLng;
-    List<EvContainer> containers =
-        await _containerRepository.relocateContainer(container, latLng);
+    await _containerRepository.relocateContainer(containerId, latLng);
 
-    yield RequestResult.success(containers);
+    yield RequestResult.success(true);
   }
 
   @override

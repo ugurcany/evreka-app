@@ -15,7 +15,7 @@
     "logout_message": "Are you sure you want to log out?",
     "settings": "Settings",
     "create_containers": "Create containers",
-    "create_containers_subtitle": "around your last known location",
+    "create_containers_subtitle": "This might take a while",
     "no_last_known_location": "No last known location!",
     "container": {
       "id": "Container {}",

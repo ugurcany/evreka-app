@@ -20,8 +20,8 @@ class ContainerRepositoryImpl implements ContainerRepository {
     //CREATE AND ADD DUMMY CONTAINERS TO FIRESTOREE
     for (var i = 1; i <= 1000; i++) {
       GeoFirePoint location = _geo.point(
-        latitude: _generateDouble(latLng.lat - 0.2, latLng.lat + 0.2),
-        longitude: _generateDouble(latLng.lng - 0.2, latLng.lng + 0.2),
+        latitude: _generateDouble(latLng.lat - 0.4, latLng.lat + 0.4),
+        longitude: _generateDouble(latLng.lng - 0.4, latLng.lng + 0.4),
       );
 
       final container = EvContainer(
@@ -61,12 +61,11 @@ class ContainerRepositoryImpl implements ContainerRepository {
   }
 
   @override
-  Stream<List<EvContainer>> getContainers(LatLng latLng) async* {
+  Stream<List<EvContainer>> getContainers(LatLng latLng, double radius) async* {
     GeoFirePoint center = _geo.point(
       latitude: latLng.lat,
       longitude: latLng.lng,
     );
-    double radius = 50;
     String field = "location";
 
     Stream<List<DocumentSnapshot>> stream = _geo
@@ -75,6 +74,7 @@ class ContainerRepositoryImpl implements ContainerRepository {
           center: center,
           radius: radius,
           field: field,
+          strictMode: true,
         );
 
     yield* stream.map<List<EvContainer>>((snapshots) =>
@@ -82,24 +82,17 @@ class ContainerRepositoryImpl implements ContainerRepository {
   }
 
   @override
-  Future<List<EvContainer>> relocateContainer(
-      EvContainer container, LatLng newLatLng) async {
+  Future relocateContainer(String containerId, LatLng newLatLng) async {
     GeoFirePoint newPoint = _geo.point(
       latitude: newLatLng.lat,
       longitude: newLatLng.lng,
     );
 
-    await _firestore
-        .collection("containers")
-        .document(container.id)
-        .updateData({
+    //UPDATE LOCATION & LATLNG PARAMS
+    await _firestore.collection("containers").document(containerId).updateData({
       "location": newPoint.data,
       "latLng": newLatLng.toJson(),
     });
-
-    final snapshot = await _firestore.collection("containers").getDocuments();
-
-    return snapshot.documents.map((d) => EvContainer.fromJson(d.data)).toList();
   }
 
   double _generateDouble(double min, double max) =>
