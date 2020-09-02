@@ -20,7 +20,11 @@
     "container": {
       "id": "Konteyner {}",
       "next_collection": "Sonraki Toplama",
+      "type": "Tipi",
+      "type_household": "Evsel",
+      "type_battery": "Pil",
       "fullness_rate": "Doluluk Oranı",
+      "temperature": "Sıcaklık",
       "navigate": "Git",
       "relocate": "Konumlandır",
       "relocate_description": "Konteyneri yeniden konumlandırmak için harita üzerinde bir konum seçin. Haritada herhangi bir yere dokunarak seçebilirsiniz.",

@@ -9,7 +9,7 @@ class Toaster {
       msg: msg,
       backgroundColor: Theme.of(context).primaryColor,
       toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
+      gravity: ToastGravity.CENTER,
     );
   }
 }

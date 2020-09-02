@@ -11,6 +11,7 @@ class EvContainer extends Equatable {
   final String id;
   final LatLng latLng;
   final double fullness;
+  final double temperature;
   final DateTime nextCollection;
   final EvContainerType type;
 
@@ -18,6 +19,7 @@ class EvContainer extends Equatable {
     this.id,
     this.latLng,
     this.fullness,
+    this.temperature,
     this.nextCollection,
     this.type,
   });
@@ -27,6 +29,7 @@ class EvContainer extends Equatable {
         id,
         latLng,
         fullness,
+        temperature,
         nextCollection,
         type,
       ];

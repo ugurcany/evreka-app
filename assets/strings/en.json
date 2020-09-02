@@ -20,7 +20,11 @@
     "container": {
       "id": "Container {}",
       "next_collection": "Next Collection",
+      "type": "Type",
+      "type_household": "Household",
+      "type_battery": "Battery",
       "fullness_rate": "Fullness Rate",
+      "temperature": "Temperature",
       "navigate": "Navigate",
       "relocate": "Relocate",
       "relocate_description": "Please select a location from the map for your bin to be relocated. You can select a location by tapping on the map.",

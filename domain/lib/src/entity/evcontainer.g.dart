@@ -12,6 +12,7 @@ extension EvContainerCopyWithExtension on EvContainer {
     String id,
     LatLng latLng,
     DateTime nextCollection,
+    double temperature,
     EvContainerType type,
   }) {
     return EvContainer(
@@ -19,6 +20,7 @@ extension EvContainerCopyWithExtension on EvContainer {
       id: id ?? this.id,
       latLng: latLng ?? this.latLng,
       nextCollection: nextCollection ?? this.nextCollection,
+      temperature: temperature ?? this.temperature,
       type: type ?? this.type,
     );
   }
@@ -35,6 +37,7 @@ EvContainer _$EvContainerFromJson(Map<String, dynamic> json) {
         ? null
         : LatLng.fromJson(json['latLng'] as Map<String, dynamic>),
     fullness: (json['fullness'] as num)?.toDouble(),
+    temperature: (json['temperature'] as num)?.toDouble(),
     nextCollection: json['nextCollection'] == null
         ? null
         : DateTime.parse(json['nextCollection'] as String),
@@ -54,6 +57,7 @@ Map<String, dynamic> _$EvContainerToJson(EvContainer instance) {
   writeNotNull('id', instance.id);
   writeNotNull('latLng', instance.latLng?.toJson());
   writeNotNull('fullness', instance.fullness);
+  writeNotNull('temperature', instance.temperature);
   writeNotNull('nextCollection', instance.nextCollection?.toIso8601String());
   writeNotNull('type', _$EvContainerTypeEnumMap[instance.type]);
   return val;

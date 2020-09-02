@@ -18,7 +18,11 @@ abstract class  LocaleKeys {
   static const main_no_last_known_location = 'main.no_last_known_location';
   static const main_container_id = 'main.container.id';
   static const main_container_next_collection = 'main.container.next_collection';
+  static const main_container_type = 'main.container.type';
+  static const main_container_type_household = 'main.container.type_household';
+  static const main_container_type_battery = 'main.container.type_battery';
   static const main_container_fullness_rate = 'main.container.fullness_rate';
+  static const main_container_temperature = 'main.container.temperature';
   static const main_container_navigate = 'main.container.navigate';
   static const main_container_relocate = 'main.container.relocate';
   static const main_container_relocate_description = 'main.container.relocate_description';

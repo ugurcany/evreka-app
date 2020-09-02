@@ -169,29 +169,87 @@ class _MapViewState extends State<MapView> {
                   .headline6
                   .copyWith(fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: Dimens.UNIT),
-            Text(
-              LocaleKeys.main_container_next_collection.localized(),
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle1
-                  .copyWith(fontWeight: FontWeight.w900),
+            const SizedBox(height: Dimens.UNIT_2),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    LocaleKeys.main_container_next_collection.localized(),
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        .copyWith(fontWeight: FontWeight.w900),
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    LocaleKeys.main_container_type.localized(),
+                    textAlign: TextAlign.end,
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        .copyWith(fontWeight: FontWeight.w900),
+                  ),
+                ),
+              ],
             ),
-            Text(
-              _selectedContainer?.displayNextCollection ?? "-",
-              style: Theme.of(context).textTheme.subtitle1,
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    _selectedContainer?.displayNextCollection ?? "-",
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    _selectedContainer?.displayType ?? "-",
+                    textAlign: TextAlign.end,
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: Dimens.UNIT),
-            Text(
-              LocaleKeys.main_container_fullness_rate.localized(),
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle1
-                  .copyWith(fontWeight: FontWeight.w900),
+            const SizedBox(height: Dimens.UNIT_2),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    LocaleKeys.main_container_fullness_rate.localized(),
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        .copyWith(fontWeight: FontWeight.w900),
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    LocaleKeys.main_container_temperature.localized(),
+                    textAlign: TextAlign.end,
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        .copyWith(fontWeight: FontWeight.w900),
+                  ),
+                ),
+              ],
             ),
-            Text(
-              _selectedContainer?.displaFullnessRate ?? "-",
-              style: Theme.of(context).textTheme.subtitle1,
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    _selectedContainer?.displayFullnessRate ?? "-",
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    _selectedContainer?.displayTemperature ?? "-",
+                    textAlign: TextAlign.end,
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: Dimens.UNIT_4),
             Row(

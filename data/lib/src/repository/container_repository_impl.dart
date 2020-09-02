@@ -18,16 +18,17 @@ class ContainerRepositoryImpl implements ContainerRepository {
     await deleteAllContainers();
 
     //CREATE AND ADD DUMMY CONTAINERS TO FIRESTOREE
-    for (var i = 1; i <= 20; i++) {
+    for (var i = 1; i <= 1000; i++) {
       GeoFirePoint location = _geo.point(
-        latitude: _generateDouble(latLng.lat - 0.1, latLng.lat + 0.1),
-        longitude: _generateDouble(latLng.lng - 0.1, latLng.lng + 0.1),
+        latitude: _generateDouble(latLng.lat - 0.2, latLng.lat + 0.2),
+        longitude: _generateDouble(latLng.lng - 0.2, latLng.lng + 0.2),
       );
 
       final container = EvContainer(
         id: "#$i",
         fullness: _generateDouble(0, 0.99),
-        nextCollection: DateTime.now(),
+        temperature: _generateDouble(20, 60),
+        nextCollection: DateTime.fromMillisecondsSinceEpoch(1601307062000),
         latLng: LatLng(location.latitude, location.longitude),
         type: i % 2 == 0 ? EvContainerType.HOUSEHOLD : EvContainerType.BATTERY,
       );
