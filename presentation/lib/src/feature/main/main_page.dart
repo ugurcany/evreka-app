@@ -41,6 +41,7 @@ class _MainPageState extends UiState<MainPage, MainController> {
                 controller.getContainers(lat, lng, radius),
             onRelocate: (containerId, lat, lng) =>
                 controller.relocateContainer(containerId, lat, lng),
+            isRelocationSuccessful: controller.data.isRelocationSuccessful,
           ),
           drawer: _drawer(),
         ),

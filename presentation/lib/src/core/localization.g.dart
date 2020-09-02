@@ -28,6 +28,7 @@ abstract class  LocaleKeys {
   static const main_container_relocate_description = 'main.container.relocate_description';
   static const main_container_save = 'main.container.save';
   static const main_container_relocate_warning = 'main.container.relocate_warning';
+  static const main_container_relocate_success = 'main.container.relocate_success';
   static const main_container = 'main.container';
   static const main = 'main';
   static const settings_title = 'settings.title';

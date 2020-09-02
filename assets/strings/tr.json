@@ -29,7 +29,8 @@
       "relocate": "Konumlandır",
       "relocate_description": "Konteyneri yeniden konumlandırmak için harita üzerinde bir konum seçin. Haritada herhangi bir yere dokunarak seçebilirsiniz.",
       "save": "Save",
-      "relocate_warning": "Önce bir konum seçin!"
+      "relocate_warning": "Önce bir konum seçin!",
+      "relocate_success": "Seçilen konteyner başarıyla yeniden konumlandırıldı!"
     }
   },
   "settings": {

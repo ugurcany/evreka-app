@@ -29,7 +29,8 @@
       "relocate": "Relocate",
       "relocate_description": "Please select a location from the map for your bin to be relocated. You can select a location by tapping on the map.",
       "save": "Save",
-      "relocate_warning": "Select a location first!"
+      "relocate_warning": "Select a location first!",
+      "relocate_success": "Your bin has been relocated successfully!"
     }
   },
   "settings": {

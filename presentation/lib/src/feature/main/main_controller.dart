@@ -22,19 +22,13 @@ class MainController extends Controller<ViewData, MainPresenter> {
     super.init(context, setState);
     observe(
       (_) => presenter.userResult,
-      onSuccess: (user) => setState(() {
-        data.user = user;
-      }),
+      onSuccess: (user) => setState(() => data.user = user),
     );
     observe(
       (_) => presenter.containersResult,
-      onLoading: () => setState(() {
-        data.isLoading = true;
-      }),
+      onLoading: () => setState(() => data.isLoading = true),
       onError: (error) {
-        setState(() {
-          data.isLoading = false;
-        });
+        setState(() => data.isLoading = false);
         Toaster.show(context, LocaleKeys.common_error.localized());
       },
       onSuccess: (containers) => setState(() {
@@ -44,18 +38,23 @@ class MainController extends Controller<ViewData, MainPresenter> {
     );
     observe(
       (_) => presenter.relocationResult,
-      onLoading: () => setState(() {
-        data.isLoading = true;
-      }),
+      onLoading: () => setState(() => data.isLoading = true),
       onError: (error) {
-        setState(() {
-          data.isLoading = false;
-        });
+        setState(() => data.isLoading = false);
         Toaster.show(context, LocaleKeys.common_error.localized());
       },
-      onSuccess: (_) => setState(() {
-        data.isLoading = false;
-      }),
+      onSuccess: (_) {
+        //CONTAINERSRESULT - ONSUCCESS ALREADY CALLED
+        Future.delayed(
+          const Duration(milliseconds: 200),
+          () => setState(() => data.isRelocationSuccessful = true),
+        );
+        //RESET ISRELOCATIONSUCCESSFUL AFTER A WHILE
+        Future.delayed(
+          const Duration(seconds: 3),
+          () => setState(() => data.isRelocationSuccessful = false),
+        );
+      },
     );
   }
 
@@ -87,4 +86,5 @@ class MainViewData extends ViewData {
   User user;
   List<EvContainer> containers;
   bool isLoading = false;
+  bool isRelocationSuccessful = false;
 }

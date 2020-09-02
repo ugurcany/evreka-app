@@ -10,6 +10,7 @@ import 'package:presentation/src/core/localization.g.dart';
 import 'package:presentation/src/core/resources.dart';
 import 'package:presentation/src/feature/main/widget/container_info_card.dart';
 import 'package:presentation/src/feature/main/widget/relocation_card.dart';
+import 'package:presentation/src/feature/main/widget/relocation_success_card.dart';
 import 'package:presentation/src/widget/toaster.dart';
 
 const double MAX_ZOOM = 18;
@@ -19,11 +20,13 @@ class MapView extends StatefulWidget {
   final List<EvContainer> containers;
   final Function(double, double, double) onCameraIdle;
   final Function(String, double, double) onRelocate;
+  final bool isRelocationSuccessful;
 
   MapView({
     this.containers,
     this.onCameraIdle,
     this.onRelocate,
+    this.isRelocationSuccessful,
   });
 
   @override
@@ -108,6 +111,11 @@ class _MapViewState extends State<MapView> {
             onCancel: () => _resetView(),
             onSave: () => _saveRelocation(),
           ),
+        ),
+        AnimatedAlign(
+          duration: kThemeAnimationDuration,
+          alignment: Alignment(0, widget.isRelocationSuccessful ? 1 : 3),
+          child: RelocationSuccessCard(),
         ),
       ],
     );
