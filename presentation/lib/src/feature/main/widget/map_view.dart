@@ -13,6 +13,11 @@ import 'package:presentation/src/feature/main/widget/relocation_card.dart';
 import 'package:presentation/src/feature/main/widget/relocation_success_card.dart';
 import 'package:presentation/src/widget/toaster.dart';
 
+/*
+  MARKERS ON IOS ARE TOO BIG: https://github.com/flutter/flutter/issues/24865
+  MARKER CLUSTERS NOT SUPPORTED YET: https://github.com/flutter/flutter/issues/26863
+*/
+
 const double MAX_ZOOM = 18;
 const double MIN_ZOOM = 10;
 
@@ -218,17 +223,20 @@ class _MapViewState extends State<MapView> with WidgetsBindingObserver {
     });
   }
 
-  _moveToCurrentPosition() async {
-    final Position position =
-        await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    (await _mapController.future).animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          target: LatLng(position.latitude, position.longitude),
-          zoom: 13,
+  _moveToCurrentPosition() {
+    Future.delayed(const Duration(milliseconds: 300), () async {
+      final Position position = await getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+      (await _mapController.future).animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: LatLng(position.latitude, position.longitude),
+            zoom: 13,
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   Set<Marker> _containersToMarkers() {

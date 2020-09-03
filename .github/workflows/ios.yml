@@ -18,6 +18,9 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: 1.8
+      - uses: pocket-studios/action-setup-firebase@v1
+        with:
+          firebase-token: ${{ secrets.FIREBASE_TOKEN }}
 
       - name: Set up Flutter environment
         uses: subosito/flutter-action@v1.3.2
@@ -36,9 +39,12 @@ jobs:
       - run: flutter build ios --release --no-codesign --build-number=${GITHUB_RUN_NUMBER}
 
       - name: Upload artifact to Firebase App Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1.2.2
-        with:
-          appId: ${{ secrets.FIREBASE_IOS_APP_ID }}
-          token: ${{ secrets.FIREBASE_TOKEN }}
-          groups: testers
-          file: build/ios/iphoneos/Runner.app
+        run: firebase appdistribution:distribute build/ios/iphoneos/Runner.app --app ${{ secrets.FIREBASE_IOS_APP_ID }} --groups "testers"
+
+      #- name: Upload artifact to Firebase App Distribution
+      #  uses: wzieba/Firebase-Distribution-Github-Action@v1.2.2
+      #  with:
+      #    appId: ${{ secrets.FIREBASE_IOS_APP_ID }}
+      #    token: ${{ secrets.FIREBASE_TOKEN }}
+      #    groups: testers
+      #    file: build/ios/iphoneos/Runner.app

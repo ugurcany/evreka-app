@@ -1,5 +1,6 @@
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:presentation/src/core/localization.dart';
 import 'package:presentation/src/core/localization.g.dart';
 import 'package:presentation/src/core/resources.dart';
@@ -149,13 +150,18 @@ class ContainerInfoCard extends StatelessWidget {
   }
 
   _startNavigation(BuildContext context) async {
-    double lat = container.latLng.lat;
-    double lng = container.latLng.lng;
+    final source = await getLastKnownPosition();
+    double srcLat = source.latitude;
+    double srcLng = source.longitude;
+
+    double destLat = container.latLng.lat;
+    double destLng = container.latLng.lng;
 
     final url = "https://www.google.com/maps/dir/?api=1" +
         "&travelmode=driving" +
         "&dir_action=navigate" +
-        "&destination=$lat,$lng";
+        "&origin=$srcLat,$srcLng" +
+        "&destination=$destLat,$destLng";
 
     if (await canLaunch(url))
       await launch(url);
