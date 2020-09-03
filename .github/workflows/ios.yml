@@ -38,8 +38,16 @@ jobs:
       #- run: flutter test
       - run: flutter build ios --release --no-codesign --build-number=${GITHUB_RUN_NUMBER}
 
+      - name: Create ipa from app
+        run: |
+          cd ios
+          xcodebuild -workspace Runner.xcworkspace -scheme Runner -sdk iphoneos -configuration Release archive -archivePath $PWD/build/Runner.xcarchive -allowProvisioningUpdates
+          xcodebuild -exportArchive -archivePath $PWD/build/Runner.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath $PWD/build/Runner.ipa -allowProvisioningUpdates
+          cd ..
+          cp ios/build/Runner.ipa/Runner.ipa build/ios/Runner.ipa
+
       - name: Upload artifact to Firebase App Distribution
-        run: firebase appdistribution:distribute build/ios/iphoneos/Runner.app --app ${{ secrets.FIREBASE_IOS_APP_ID }} --groups "testers"
+        run: firebase appdistribution:distribute build/ios/Runner.ipa --app ${{ secrets.FIREBASE_IOS_APP_ID }} --groups "testers"
 
       #- name: Upload artifact to Firebase App Distribution
       #  uses: wzieba/Firebase-Distribution-Github-Action@v1.2.2
