@@ -33,7 +33,7 @@ class MapView extends StatefulWidget {
   _MapViewState createState() => _MapViewState();
 }
 
-class _MapViewState extends State<MapView> {
+class _MapViewState extends State<MapView> with WidgetsBindingObserver {
   final _mapController = Completer<GoogleMapController>();
   BitmapDescriptor _batteryContainerPin;
   BitmapDescriptor _householdContainerPin;
@@ -53,8 +53,23 @@ class _MapViewState extends State<MapView> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _loadMarkerPins();
     _moveToCurrentPosition();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    //REQUIRED TO FIX BLANK MAP ISSUE WHEN COMING BACK FROM BACKGROUND
+    if (state == AppLifecycleState.resumed) {
+      (await _mapController.future).setMapStyle("[]");
+    }
   }
 
   _loadMarkerPins() {
