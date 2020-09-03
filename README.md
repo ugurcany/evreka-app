@@ -1,4 +1,4 @@
-# evreka app ![app workflow](https://github.com/ugurcany/evreka-app/workflows/app%20workflow/badge.svg)
+# evreka app ![android workflow](https://github.com/ugurcany/evreka-app/workflows/android%20workflow/badge.svg) ![ios workflow](https://github.com/ugurcany/evreka-app/workflows/ios%20workflow/badge.svg)
 
 This is the repository of **evreka** mobile app.
 

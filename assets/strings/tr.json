@@ -1,7 +1,6 @@
 {
   "common": {
     "error": "Bir şeyler ters gitti!",
-    "not_implemented": "Henüz hazır değil!",
     "cancel": "İptal",
     "go_back": "Geri dön",
     "menu": "Menü"
@@ -30,7 +29,8 @@
       "relocate_description": "Konteyneri yeniden konumlandırmak için harita üzerinde bir konum seçin. Haritada herhangi bir yere dokunarak seçebilirsiniz.",
       "save": "Save",
       "relocate_warning": "Önce bir konum seçin!",
-      "relocate_success": "Seçilen konteyner başarıyla yeniden konumlandırıldı!"
+      "relocate_success": "Seçilen konteyner başarıyla yeniden konumlandırıldı!",
+      "navigate_error": "Navigasyon başlatılamadı!"
     }
   },
   "settings": {

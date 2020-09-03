@@ -130,8 +130,7 @@ class ContainerInfoCard extends StatelessWidget {
                 Expanded(
                   child: PrimaryButton(
                     text: LocaleKeys.main_container_navigate.localized(),
-                    onPressed: () => Toaster.show(
-                        context, LocaleKeys.common_not_implemented.localized()),
+                    onPressed: () => _startNavigation(context),
                   ),
                 ),
                 const SizedBox(width: Dimens.UNIT_5),
@@ -147,5 +146,21 @@ class ContainerInfoCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _startNavigation(BuildContext context) async {
+    double lat = container.latLng.lat;
+    double lng = container.latLng.lng;
+
+    final url = "https://www.google.com/maps/dir/?api=1" +
+        "&travelmode=driving" +
+        "&dir_action=navigate" +
+        "&destination=$lat,$lng";
+
+    if (await canLaunch(url))
+      await launch(url);
+    else
+      Toaster.show(
+          context, LocaleKeys.main_container_navigate_error.localized());
   }
 }

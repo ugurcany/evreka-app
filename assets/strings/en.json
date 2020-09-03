@@ -1,7 +1,6 @@
 {
   "common": {
     "error": "Something went wrong!",
-    "not_implemented": "Not implemented yet!",
     "cancel": "Cancel",
     "go_back": "Go back",
     "menu": "Menu"
@@ -30,7 +29,8 @@
       "relocate_description": "Please select a location from the map for your bin to be relocated. You can select a location by tapping on the map.",
       "save": "Save",
       "relocate_warning": "Select a location first!",
-      "relocate_success": "Your bin has been relocated successfully!"
+      "relocate_success": "Your bin has been relocated successfully!",
+      "navigate_error": "Navigation could not be started!"
     }
   },
   "settings": {
