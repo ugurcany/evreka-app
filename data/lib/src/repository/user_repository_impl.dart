@@ -17,28 +17,25 @@ class UserRepositoryImpl implements UserRepository {
   final _firebaseStorage = FirebaseStorage.instance;
 
   @override
-  Future<bool> isMe(String userId) async {
-    FirebaseUser userFromAuth = await _firebaseAuth.currentUser();
-    return userFromAuth.uid == userId;
-  }
+  Future<bool> isLoggedIn() async => (await getUserFromLocal()) != null;
 
   @override
-  Future<User> getUserFromLocal() async {
-    return await LocalDb.get(
-      _loggedInUser,
-      deserializer: (json) => User.fromJson(json),
-    );
-  }
+  Future<bool> isMe(String userId) async =>
+      (await _firebaseAuth.currentUser()).uid == userId;
 
   @override
-  Future<bool> saveUserToLocal(User user) async {
-    return await LocalDb.put(_loggedInUser, user);
-  }
+  Future<User> getUserFromLocal() async => await LocalDb.get(
+        _loggedInUser,
+        deserializer: (json) => User.fromJson(json),
+      );
 
   @override
-  Future<bool> deleteUserFromLocal() async {
-    return await LocalDb.delete(_loggedInUser);
-  }
+  Future<bool> saveUserToLocal(User user) async =>
+      await LocalDb.put(_loggedInUser, user);
+
+  @override
+  Future<bool> deleteUserFromLocal() async =>
+      await LocalDb.delete(_loggedInUser);
 
   @override
   Future<User> getUserFromRemote() async {

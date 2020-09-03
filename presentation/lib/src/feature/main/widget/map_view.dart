@@ -197,9 +197,9 @@ class _MapViewState extends State<MapView> {
 
   _showInfoCard(String selectedContainerId) {
     setState(() {
+      _selectedContainerId = selectedContainerId;
       _isRelocating = false;
       _relocationPoint = null;
-      _selectedContainerId = selectedContainerId;
     });
   }
 

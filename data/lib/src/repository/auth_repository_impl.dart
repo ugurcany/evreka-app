@@ -30,9 +30,8 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future authenticateWithGitHubPart1() async {
-    await _showAuthUrlOnBrowser(GithubAuthProvider.providerId);
-  }
+  Future authenticateWithGitHubPart1() async =>
+      await _showAuthUrlOnBrowser(GithubAuthProvider.providerId);
 
   @override
   Future authenticateWithGitHubPart2(Uri link) async {
@@ -49,9 +48,8 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future authenticateWithTwitterPart1() async {
-    await _showAuthUrlOnBrowser(TwitterAuthProvider.providerId);
-  }
+  Future authenticateWithTwitterPart1() async =>
+      await _showAuthUrlOnBrowser(TwitterAuthProvider.providerId);
 
   @override
   Future authenticateWithTwitterPart2(Uri link) async {
