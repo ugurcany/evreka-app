@@ -46,12 +46,9 @@ class _MapViewState extends State<MapView> with WidgetsBindingObserver {
   BitmapDescriptor _householdContainerRelocatedPin;
 
   CameraPosition _centerPosition = CameraPosition(target: LatLng(0, 0));
-  String _selectedContainerId;
+  EvContainer _selectedContainer;
   LatLng _relocationPoint;
   bool _isRelocating = false;
-
-  EvContainer get _selectedContainer => widget.containers
-      ?.singleWhere((c) => c.id == _selectedContainerId, orElse: () => null);
 
   double get _geoRadius => (MAX_ZOOM - _centerPosition.zoom + MIN_ZOOM);
 
@@ -191,7 +188,7 @@ class _MapViewState extends State<MapView> with WidgetsBindingObserver {
 
   _resetView() {
     setState(() {
-      _selectedContainerId = null;
+      _selectedContainer = null;
       _isRelocating = false;
       _relocationPoint = null;
     });
@@ -207,7 +204,7 @@ class _MapViewState extends State<MapView> with WidgetsBindingObserver {
           context, LocaleKeys.main_container_relocate_warning.localized());
     else {
       widget.onRelocate?.call(
-        _selectedContainerId,
+        _selectedContainer.id,
         _relocationPoint.latitude,
         _relocationPoint.longitude,
       );
@@ -215,9 +212,9 @@ class _MapViewState extends State<MapView> with WidgetsBindingObserver {
     }
   }
 
-  _showInfoCard(String selectedContainerId) {
+  _showInfoCard(EvContainer selectedContainer) {
     setState(() {
-      _selectedContainerId = selectedContainerId;
+      _selectedContainer = selectedContainer;
       _isRelocating = false;
       _relocationPoint = null;
     });
@@ -283,7 +280,7 @@ class _MapViewState extends State<MapView> with WidgetsBindingObserver {
       markerId: MarkerId(container.id),
       position: LatLng(container.latLng.lat, container.latLng.lng),
       icon: _getMarkerPin(container.type),
-      onTap: () => _showInfoCard(container.id),
+      onTap: () => _showInfoCard(container),
     );
   }
 
