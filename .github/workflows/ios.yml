@@ -10,7 +10,7 @@ on:
       - develop
 
 jobs:
-  build_and_deploy:
+  build:
     runs-on: macos-latest
 
     steps:
@@ -38,21 +38,4 @@ jobs:
       #- run: flutter test
       - run: flutter build ios --release --no-codesign --build-number=${GITHUB_RUN_NUMBER}
 
-      # not a desired way but should work
-      - name: Create ipa from app
-        run: |
-          mkdir -p build/ios/iphoneos/Payload
-          mv build/ios/iphoneos/Runner.app build/ios/iphoneos/Payload
-          cd build/ios/iphoneos
-          zip -r app.ipa Payload
-
-      - name: Upload artifact to Firebase App Distribution
-        run: firebase appdistribution:distribute build/ios/iphoneos/app.ipa --app ${{ secrets.FIREBASE_IOS_APP_ID }} --groups "testers"
-
-      #- name: Upload artifact to Firebase App Distribution
-      #  uses: wzieba/Firebase-Distribution-Github-Action@v1.2.2
-      #  with:
-      #    appId: ${{ secrets.FIREBASE_IOS_APP_ID }}
-      #    token: ${{ secrets.FIREBASE_TOKEN }}
-      #    groups: testers
-      #    file: build/ios/iphoneos/Runner.app
+      # FOR MANUAL DEPLOY, SEE HERE: https://github.com/flutter/flutter/issues/13065#issuecomment-573354427

@@ -3,10 +3,6 @@
 <plist version="1.0">
     <dict>
         <key>method</key>
-        <string>ad-hoc</string>
-        <key>uploadBitcode</key>
-        <false/>
-        <key>uploadSymbols</key>
-        <true/>
+        <string>development</string>
     </dict>
 </plist>
