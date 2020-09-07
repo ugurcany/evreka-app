@@ -14,7 +14,6 @@ import 'package:presentation/src/feature/main/widget/relocation_success_card.dar
 import 'package:presentation/src/widget/toaster.dart';
 
 /*
-  MARKERS ON IOS ARE TOO BIG: https://github.com/flutter/flutter/issues/24865
   MARKER CLUSTERS NOT SUPPORTED YET: https://github.com/flutter/flutter/issues/26863
 */
 
@@ -42,8 +41,6 @@ class _MapViewState extends State<MapView> with WidgetsBindingObserver {
   final _mapController = Completer<GoogleMapController>();
   BitmapDescriptor _batteryContainerPin;
   BitmapDescriptor _householdContainerPin;
-  BitmapDescriptor _batteryContainerRelocatedPin;
-  BitmapDescriptor _householdContainerRelocatedPin;
 
   CameraPosition _centerPosition = CameraPosition(target: LatLng(0, 0));
   EvContainer _selectedContainer;
@@ -75,31 +72,21 @@ class _MapViewState extends State<MapView> with WidgetsBindingObserver {
   }
 
   _loadMarkerPins() {
-    //LOAD BATTERY PINS
+    //LOAD BATTERY PIN
     BitmapDescriptor.fromAssetImage(
       ImageConfiguration(devicePixelRatio: 2.5),
       AppIcons.BATTERY_PIN,
+      mipmaps: false,
     ).then((pin) {
       _batteryContainerPin = pin;
     });
-    BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(devicePixelRatio: 2.5),
-      AppIcons.BATTERY_RELOCATED_PIN,
-    ).then((pin) {
-      _batteryContainerRelocatedPin = pin;
-    });
-    //LOAD HOUSEHOLD PINS
+    //LOAD HOUSEHOLD PIN
     BitmapDescriptor.fromAssetImage(
       ImageConfiguration(devicePixelRatio: 2.5),
       AppIcons.HOUSEHOLD_PIN,
+      mipmaps: false,
     ).then((pin) {
       _householdContainerPin = pin;
-    });
-    BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(devicePixelRatio: 2.5),
-      AppIcons.HOUSEHOLD_RELOCATED_PIN,
-    ).then((pin) {
-      _householdContainerRelocatedPin = pin;
     });
   }
 
@@ -248,7 +235,8 @@ class _MapViewState extends State<MapView> with WidgetsBindingObserver {
             markerId: MarkerId("${_selectedContainer.id}_relocated"),
             position:
                 LatLng(_relocationPoint.latitude, _relocationPoint.longitude),
-            icon: _getMarkerPin(_selectedContainer.type, isRelocated: true),
+            icon: _getMarkerPin(_selectedContainer.type),
+            alpha: 0.5,
           ),
         );
       }
@@ -284,22 +272,13 @@ class _MapViewState extends State<MapView> with WidgetsBindingObserver {
     );
   }
 
-  BitmapDescriptor _getMarkerPin(
-    EvContainerType containerType, {
-    bool isRelocated = false,
-  }) {
-    var pin;
+  BitmapDescriptor _getMarkerPin(EvContainerType containerType) {
     switch (containerType) {
       case EvContainerType.BATTERY:
-        pin =
-            isRelocated ? _batteryContainerRelocatedPin : _batteryContainerPin;
-        break;
+        return _batteryContainerPin;
       case EvContainerType.HOUSEHOLD:
-        pin = isRelocated
-            ? _householdContainerRelocatedPin
-            : _householdContainerPin;
-        break;
+        return _householdContainerPin;
     }
-    return pin;
+    return null;
   }
 }
